@@ -1,0 +1,45 @@
+body{
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.pizza-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    flex: 3;
+}
+
+.pizza {
+    height: 500px;
+    width: 500px;
+    background-image: url('https://storage.pizzapizza.ca/phx2/ppl_images/category/en/2x/create_your_own.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+}
+
+.side-menu {
+    height: 100vh;
+    background-color: #A4C2A5;
+    text-align: center;
+    flex: 1;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li{
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #EEE5E9;
+    border: black 1px solid;
+    
+}
