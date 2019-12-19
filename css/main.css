@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0;
 }
 
@@ -10,8 +10,16 @@ body{
 .pizza-wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     flex: 3;
+}
+
+.pizza-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center; */
 }
 
 .pizza {
@@ -21,6 +29,10 @@ body{
     background-size: contain;
     background-repeat: no-repeat;
     margin: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
 }
 
 .side-menu {
@@ -35,11 +47,22 @@ ul {
     padding: 0;
 }
 
-ul li{
+ul li {
     margin: 20px;
     padding: 10px;
     border-radius: 10px;
     background-color: #EEE5E9;
-    border: black 1px solid;
-    
+    border: black 3px solid;
+    box-sizing: border-box;
+}
+
+.selected {
+    border: red 3px solid;
+    box-sizing: border-box;
+}
+
+.topping{
+    height: 60px;
+    width: 100px;
+    position: absolute;
 }

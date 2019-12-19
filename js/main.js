@@ -1,9 +1,20 @@
 const Pizza = {};
-Pizza.toppings = ["olives", "corn", "mushrooms", "onion", 'tomatos']
+
+Pizza.toppings = ["olives", "corn", "mushroom", "onion", 'tomato']
+Pizza.pizza = $('#pizza');
+Pizza.pizzaTitleElement = $('#pizza-title');
+Pizza.selectedTopping;
+Pizza.currentPizza = {
+    name: 'no name',
+    toppings: []
+};
 
 Pizza.start = () => {
+    Pizza.pizza.hide();
+    // Pizza.pizza.show();
     Pizza.bindOptions();
     Pizza.createToppingsList();
+    Pizza.pizza.click(Pizza.wrapAddTopping);
 }
 
 Pizza.bindOptions = () => {
@@ -23,19 +34,69 @@ Pizza.createToppingsList = () => {
         li.attr('id', topping);
         li.text(topping);
         toppingsMenu.append(li);
+
+        li.click((event) => {
+            for (const topping of Pizza.toppings) {
+                const currentElement = $('#' + topping)
+                currentElement.removeClass('selected');
+            }
+            $(event.target).addClass('selected');
+            Pizza.selectedTopping = topping;
+        })
+    }
+}
+
+Pizza.wrapAddTopping = (e) => {
+    Pizza.addTopping(
+        Pizza.selectedTopping,
+        e.pageY - e.target.offsetTop - 30 + 'px',
+        e.pageX - e.target.offsetLeft - 50 + 'px'
+    )
+}
+Pizza.addTopping = (selectedTopping, top, left) => {
+    if (Pizza.selectedTopping != undefined) {
+        const newTopping = $('<img/>');
+        newTopping.attr('src', '../img/' + selectedTopping + '.png');
+        newTopping.addClass('topping');
+
+        Pizza.pizza.append(newTopping);
+        newTopping.css('top', top);
+        newTopping.css('left', left);
+        Pizza.currentPizza.toppings.push({
+            topping: selectedTopping,
+            top: top,
+            left: left,
+        })
     }
 }
 
 Pizza.new = () => {
-
+    Pizza.pizzaName = prompt("please name the pizza");
+    Pizza.pizzaTitleElement.text(Pizza.pizzaName);
+    Pizza.currentPizza = {
+        name: Pizza.pizzaName,
+        toppings: []
+    };
+    Pizza.pizza.empty();
+    Pizza.pizza.show();
 }
 
 Pizza.load = () => {
-
+    Pizza.pizza.empty();
+    Pizza.pizza.show();
+    Pizza.currentPizza = JSON.parse(localStorage.getItem('savedPizza'));
+    console.log(Pizza.currentPizza);
+    
+    for (const topping of Pizza.currentPizza.toppings) {
+        console.log(topping);
+        Pizza.addTopping(topping.topping, topping.top, topping.left)    
+    }
+    
 }
 
 Pizza.save = () => {
-
+    localStorage.setItem('savedPizza', JSON.stringify(Pizza.currentPizza));
+    alert('saved');
 }
 
 Pizza.start();
