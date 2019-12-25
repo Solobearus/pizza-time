@@ -4,6 +4,7 @@ Pizza.toppings = ["olives", "corn", "mushroom", "onion", 'tomato']
 Pizza.pizza = $('#pizza');
 Pizza.pizzaTitleElement = $('#pizza-title');
 Pizza.selectedTopping;
+
 Pizza.currentPizza = {
     name: 'no name',
     toppings: []
@@ -50,11 +51,15 @@ Pizza.wrapAddTopping = (e) => {
     Pizza.addTopping(
         Pizza.selectedTopping,
         e.pageY - e.target.offsetTop - 30 + 'px',
-        e.pageX - e.target.offsetLeft - 50 + 'px'
+        e.pageX - e.target.offsetLeft - 50 + 'px',
+        false
     )
 }
-Pizza.addTopping = (selectedTopping, top, left) => {
-    if (Pizza.selectedTopping != undefined) {
+Pizza.addTopping = (selectedTopping, top, left, load) => {
+    console.log(selectedTopping);
+    if (selectedTopping != undefined) {
+        console.log(selectedTopping);
+
         const newTopping = $('<img/>');
         newTopping.attr('src', '../img/' + selectedTopping + '.png');
         newTopping.addClass('topping');
@@ -62,11 +67,14 @@ Pizza.addTopping = (selectedTopping, top, left) => {
         Pizza.pizza.append(newTopping);
         newTopping.css('top', top);
         newTopping.css('left', left);
-        Pizza.currentPizza.toppings.push({
-            topping: selectedTopping,
-            top: top,
-            left: left,
-        })
+
+        if (!load) {
+            Pizza.currentPizza.toppings.push({
+                topping: selectedTopping,
+                top: top,
+                left: left,
+            })
+        }
     }
 }
 
@@ -85,13 +93,14 @@ Pizza.load = () => {
     Pizza.pizza.empty();
     Pizza.pizza.show();
     Pizza.currentPizza = JSON.parse(localStorage.getItem('savedPizza'));
-    console.log(Pizza.currentPizza);
-    
+
+    // console.log(Pizza.currentPizza);
+    Pizza.pizzaTitleElement.text(Pizza.currentPizza.name);
+
     for (const topping of Pizza.currentPizza.toppings) {
-        console.log(topping);
-        Pizza.addTopping(topping.topping, topping.top, topping.left)    
+        // console.log(topping);
+        Pizza.addTopping(topping.topping, topping.top, topping.left, true);
     }
-    
 }
 
 Pizza.save = () => {
