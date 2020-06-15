@@ -57,11 +57,11 @@ Pizza.wrapAddTopping = (e) => {
 }
 Pizza.addTopping = (selectedTopping, top, left, load) => {
     console.log(selectedTopping);
+    
     if (selectedTopping != undefined) {
-        console.log(selectedTopping);
 
         const newTopping = $('<img/>');
-        newTopping.attr('src', '../img/' + selectedTopping + '.png');
+        newTopping.attr('src', './img/' + selectedTopping + '.png');
         newTopping.addClass('topping');
 
         Pizza.pizza.append(newTopping);
@@ -93,12 +93,9 @@ Pizza.load = () => {
     Pizza.pizza.empty();
     Pizza.pizza.show();
     Pizza.currentPizza = JSON.parse(localStorage.getItem('savedPizza'));
-
-    // console.log(Pizza.currentPizza);
     Pizza.pizzaTitleElement.text(Pizza.currentPizza.name);
 
     for (const topping of Pizza.currentPizza.toppings) {
-        // console.log(topping);
         Pizza.addTopping(topping.topping, topping.top, topping.left, true);
     }
 }
